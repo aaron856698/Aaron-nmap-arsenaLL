@@ -44,18 +44,39 @@ def limpiar_pantalla():
 
 
 def mostrar_banner():
-    print(Fore.WHITE + """
-        .--.                      ███╗   ██╗███╗   ███╗ █████╗ ██████╗
-       |o_o |                    ████╗  ██║████╗ ████║██╔══██╗██╔══██╗
-       |:_/ |                    ██╔██╗ ██║██╔████╔██║███████║██████╔╝
-      //   \\ \\                   ██║╚██╗██║██║╚██╔╝██║██╔══██║██╔═══╝
-     (|     | )                  ██║ ╚████║██║ ╚═╝ ██║██║  ██║██║
-    /'\\_   _/`\\                  ╚═╝  ╚═══╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝
-    \\___)=(___/
-""")
-    print(Fore.LIGHTCYAN_EX + Style.BRIGHT +
-          "🐧 NMAP AUTOMATIZADO - ESCANEO AUTOMÁTICO")
-    print(Fore.YELLOW + "🛠️ Hecho por: Aaron David - 🇦🇷 Argentino")
+    # Leer el banner desde el archivo ascii-art.txt
+    try:
+        with open('imagenBaner/ascii-art.txt', 'r') as archivo:
+            lineas_banner = archivo.readlines()
+        
+        # Texto al costado
+        texto_titulo = Fore.LIGHTCYAN_EX + Style.BRIGHT + "🐧 NMAP AUTOMATIZADO - ESCANEO AUTOMÁTICO"
+        texto_autor = Fore.YELLOW + "🛠️ Hecho por: Aaron David - 🇦🇷 Argentino"
+        
+        # Calcular posición para centrar el texto verticalmente
+        altura_banner = len(lineas_banner)
+        altura_texto = 2  # Dos líneas de texto
+        espacio_superior = (altura_banner - altura_texto) // 2
+        
+        # Imprimir banner con texto al costado
+        for i, linea in enumerate(lineas_banner):
+            linea_banner = Fore.WHITE + linea.rstrip()
+            
+            # Agregar texto en las posiciones calculadas
+            if i == espacio_superior:
+                espacio = " " * 4  # Espacio entre banner y texto
+                print(linea_banner + espacio + texto_titulo)
+            elif i == espacio_superior + 1:
+                espacio = " " * 4
+                print(linea_banner + espacio + texto_autor)
+            else:
+                print(linea_banner)
+                
+    except FileNotFoundError:
+        # Si no se encuentra el archivo, mostrar solo el texto
+        print(Fore.LIGHTCYAN_EX + Style.BRIGHT +
+              "🐧 NMAP AUTOMATIZADO - ESCANEO AUTOMÁTICO")
+        print(Fore.YELLOW + "🛠️ Hecho por: Aaron David - 🇦🇷 Argentino")
 
 
 def mostrar_menu():
